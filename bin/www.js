@@ -5,10 +5,15 @@
 import app from '../app.js';
 
 import http from 'http';
+import https from 'https';
 /**
  * Create HTTP server.
  */
-const server = http.createServer(app);
+
+const server =
+  process.env.NODE_ENV !== 'production'
+    ? http.createServer(app)
+    : https.createServer(app);
 
 /**
  * Normalize a port into a number, string, or false.
