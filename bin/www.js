@@ -3,6 +3,7 @@
  * Module dependencies.
  */
 import app from '../app.js';
+import config from '../config/config.js';
 
 import http from 'http';
 import https from 'https';
@@ -10,8 +11,9 @@ import https from 'https';
  * Create HTTP server.
  */
 
+console.log(config.MODE);
 const server =
-  process.env.NODE_ENV !== 'production'
+  config.MODE !== 'production'
     ? http.createServer(app)
     : https.createServer(app);
 
