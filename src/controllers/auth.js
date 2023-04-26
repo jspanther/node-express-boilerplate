@@ -1,13 +1,13 @@
-const { AuthService } = require("../services/auth");
-const { Auth } = require("../models/auth");
-const { User } = require("../models/user");
-const autoBind = require("auto-bind");
-const bcrypt = require("bcrypt"),
-  SALT_WORK_FACTOR = 10,
-  authService = new AuthService(
-    new Auth().getInstance(),
-    new User().getInstance()
-  );
+import autoBind from 'auto-bind';
+import Auth from '../models/auth.js';
+import User from '../models/user.js';
+import AuthService from '../services/auth.js';
+const bcrypt = import('bcrypt');
+const SALT_WORK_FACTOR = 10;
+const authService = new AuthService(
+  new Auth().getInstance(),
+  new User().getInstance()
+);
 
 class AuthController {
   constructor(service) {
@@ -87,9 +87,9 @@ class AuthController {
   extractToken(req) {
     if (
       req.headers.authorization &&
-      req.headers.authorization.split(" ")[0] === "Bearer"
+      req.headers.authorization.split(' ')[0] === 'Bearer'
     ) {
-      return req.headers.authorization.split(" ")[1];
+      return req.headers.authorization.split(' ')[1];
     } else if (req.query && req.query.token) {
       return req.query.token;
     }
@@ -97,4 +97,4 @@ class AuthController {
   }
 }
 
-module.exports = new AuthController(authService);
+export default new AuthController(authService);

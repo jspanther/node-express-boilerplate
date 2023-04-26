@@ -1,8 +1,8 @@
-"use strict";
-const { UserService } = require("./user");
-const autoBind = require("auto-bind");
-const { HttpResponse } = require("../../helpers/HttpResponse");
-const mongoose = require("mongoose");
+'use strict';
+import autoBind from 'auto-bind';
+import mongoose from 'mongoose';
+import HttpResponse from '../../helpers/HttpResponse.js';
+import UserService from './user.js';
 
 class AuthService {
   constructor(model, userModel) {
@@ -22,7 +22,7 @@ class AuthService {
 
     if (!user) {
       // User not found
-      const error = new Error("Invalid Email");
+      const error = new Error('Invalid Email');
 
       error.statusCode = 422;
       throw error;
@@ -33,7 +33,7 @@ class AuthService {
         const passwordMatched = await user.comparePassword(password);
 
         if (!passwordMatched) {
-          const error = new Error("Invalid Password");
+          const error = new Error('Invalid Password');
 
           error.statusCode = 422;
           throw error;
@@ -46,7 +46,7 @@ class AuthService {
         });
         const tokenData = await this.model
           .findOne({ token: token })
-          .populate("user");
+          .populate('user');
 
         return new HttpResponse(tokenData);
       } catch (e) {
@@ -88,7 +88,7 @@ class AuthService {
       const tokenInDB = await this.model.countDocuments({ token });
 
       if (!tokenInDB) {
-        const error = new Error("Invalid Token");
+        const error = new Error('Invalid Token');
 
         error.statusCode = 401;
         throw error;
@@ -97,7 +97,7 @@ class AuthService {
       const user = await this.model.decodeToken(token);
 
       if (!user) {
-        const error = new Error("Invalid Token");
+        const error = new Error('Invalid Token');
 
         error.statusCode = 401;
         throw error;
@@ -108,12 +108,12 @@ class AuthService {
       if (userFromDb.data && userFromDb.data.status) {
         return userFromDb.data;
       }
-      const error = new Error("Invalid Token");
+      const error = new Error('Invalid Token');
 
       error.statusCode = 401;
       throw error;
     } catch (e) {
-      const error = new Error("Invalid Token");
+      const error = new Error('Invalid Token');
 
       error.statusCode = 401;
       throw error;
@@ -121,4 +121,4 @@ class AuthService {
   }
 }
 
-module.exports = { AuthService };
+export default AuthService;

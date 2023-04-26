@@ -1,5 +1,6 @@
-const mongoose = require("mongoose"),
-  config = require("./config").getConfig();
+import mongoose from 'mongoose';
+import { getConfig } from './config.js';
+const config = getConfig();
 
 // Mongo Connection Class
 class Connection {
@@ -7,16 +8,12 @@ class Connection {
     const url = config.MONGO_URL;
 
     mongoose.Promise = global.Promise;
-    mongoose.set("useNewUrlParser", true);
-    mongoose.set("useFindAndModify", false);
-    mongoose.set("useCreateIndex", true);
-    mongoose.set("useUnifiedTopology", true);
     this.connect(url)
       .then(() => {
-        console.log("✔ Database Connected");
+        console.log('✔ Database Connected');
       })
       .catch((err) => {
-        console.error("✘ MONGODB ERROR: ", err.message);
+        console.error('✘ MONGODB ERROR: ', err.message);
       });
   }
 
@@ -29,4 +26,4 @@ class Connection {
   }
 }
 
-module.exports = new Connection();
+export default new Connection();

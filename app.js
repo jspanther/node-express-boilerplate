@@ -1,24 +1,25 @@
-const cors = require("cors");
-const express = require("express");
-const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
-const logger = require("morgan");
-const helmet = require("helmet");
-require("dotenv").config();
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import * as dotenv from 'dotenv';
+import express from 'express';
+import helmet from 'helmet';
+import logger from 'morgan';
 
-const { setRoutes } = require("./routes/index");
+dotenv.config();
+
+import setRoutes from './routes/index.js';
 
 const app = express();
 
 // Initialize DB Connection
-require("./config/database");
-
+import('./config/database.js');
 // Allow Origins according to your need.
-corsOptions = { origin: "*" };
+const corsOptions = { origin: '*' };
 
 app.use(helmet());
 app.use(cors(corsOptions));
-app.use(logger("dev"));
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -27,4 +28,4 @@ app.use(bodyParser.json());
 // Setting up Routes
 setRoutes(app);
 
-module.exports = app;
+export default app;

@@ -2,36 +2,36 @@
   "name": "mye-eno-api",
   "version": "0.0.0",
   "private": true,
-  "main": "./bin/www",
+  "author": "Rahul Kumar",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": ""
   },
-  "author": "Rahul Kumar",
   "scripts": {
     "lint": "eslint . --fix",
-    "start": "npm run lint  && node ./bin/www",
-    "start:n": "nodemon ./bin/www"
+    "start": "npm run lint  && node ./bin/www.js",
+    "start:n": "nodemon ./bin/www.js"
   },
   "dependencies": {
-    "bcrypt": "^5.0.0",
-    "async": "^3.2.2",
-    "auto-bind": "^4.0.0",
-    "body-parser": "^1.19.0",
-    "cookie-parser": "~1.4.4",
+    "bcrypt": "^5.1.0",
+    "async": "^3.2.4",
+    "auto-bind": "^5.0.1",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "~1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "helmet": "^6.1.5",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^5.7.7",
-    "mongoose-unique-validator": "^2.0.3",
-    "morgan": "~1.9.1",
+    "mongoose": "^7.0.4",
+    "mongoose-unique-validator": "^4.0.0",
+    "morgan": "~1.10.0",
     "pluralize": "^8.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.12.1",
+    "eslint": "^8.38.0",
     "nodemon": "^2.0.22"
   }
 }

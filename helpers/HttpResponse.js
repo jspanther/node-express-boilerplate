@@ -1,5 +1,5 @@
-"use strict";
-const defaultExcludedItemsFromResponse = ["__v", "password"];
+'use strict';
+const defaultExcludedItemsFromResponse = ['__v', 'password'];
 
 class HttpResponse {
   /**
@@ -16,7 +16,7 @@ class HttpResponse {
     this.statusCode = options.statusCode || 200;
     let filteredData = data;
 
-    if (typeof filteredData === "object") {
+    if (typeof filteredData === 'object') {
       filteredData = this.filterData(JSON.parse(JSON.stringify(filteredData)));
     }
     if (options.deleted) {
@@ -25,7 +25,7 @@ class HttpResponse {
     if (Array.isArray(filteredData)) {
       this.data = [...filteredData];
       this.totalCount = options.totalCount || undefined;
-    } else if (typeof filteredData === "object") {
+    } else if (typeof filteredData === 'object') {
       this.data = { ...filteredData };
     } else {
       this.data = data;
@@ -41,7 +41,7 @@ class HttpResponse {
           }
         });
       });
-    } else if (typeof data === "object") {
+    } else if (typeof data === 'object') {
       Object.keys(data).forEach((key) => {
         if (defaultExcludedItemsFromResponse.includes(key)) {
           delete data[key];
@@ -52,4 +52,4 @@ class HttpResponse {
   }
 }
 
-module.exports = { HttpResponse };
+export default HttpResponse;

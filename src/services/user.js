@@ -1,6 +1,6 @@
-"use strict";
-const { Service } = require("./common");
-const autoBind = require("auto-bind");
+'use strict';
+import autoBind from 'auto-bind';
+import Service from './common.js';
 
 class UserService extends Service {
   constructor(model) {
@@ -26,9 +26,9 @@ class UserService extends Service {
    */
   async findByEmail(email, includePassword = false) {
     return includePassword
-      ? this.model.findByEmail(email).select("+password")
+      ? this.model.findByEmail(email).select('+password')
       : this.model.findByEmail(email);
   }
 }
 
-module.exports = { UserService };
+export default UserService;

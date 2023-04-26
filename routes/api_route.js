@@ -1,54 +1,63 @@
-"use strict";
-const express = require("express");
+/* eslint-disable global-require */
+'use strict';
+import express from 'express';
+import path from 'path';
+import pluralize from 'pluralize';
+import url from 'url';
+import HttpError from '../helpers/HttpError.js';
 const router = express.Router();
-const pluralize = require("pluralize");
-const path = require("path");
-const { HttpError } = require("../helpers/HttpError");
 
-pluralize.addUncountableRule("media");
-pluralize.addUncountableRule("auth");
+pluralize.addUncountableRule('media');
+pluralize.addUncountableRule('auth');
 
-const fs = require("fs");
-const routesPath = path.resolve(`${__dirname}/api_routes`);
+import fs from 'fs';
+const routesPath = path.resolve(
+  `${path.dirname(url.fileURLToPath(import.meta.url))}/api_routes`
+);
 const PATHS = fs.readdirSync(routesPath);
 const moduleMapper = [];
 
-console.log("✔ Mapping routes");
-PATHS.forEach((module) => {
-  if (module !== "index.js") {
-    const name = module.split(".")[0];
-    console.log(`/${pluralize.plural(name)}`);
-    router.use(
-      `/api/${pluralize.plural(name)}`,
-      require(path.resolve(routesPath, module))
-    );
+console.log('✔ Mapping routes');
+let apiFunctionName = '';
+
+PATHS.forEach(async (module, index) => {
+  if (module !== 'index.js') {
+    const name = module.split('.')[0];
+    apiFunctionName = await import(`./api_routes/${module}`);
+
+    router.use(`/${pluralize.plural(name)}`, apiFunctionName.default);
     moduleMapper.push({
       Module: name,
       Route: `/api/${pluralize.plural(name)}`,
     });
+    if (PATHS.length === index + 1) {
+      routerFunction();
+    }
   }
 });
 
-/* List out all the api's */
-console.table(moduleMapper);
+const routerFunction = () => {
+  /* List out all the api's */
+  console.table(moduleMapper);
 
-router.use("*", (req, res, next) => {
-  // 404 handler
-  const error = new Error("Resource not found");
+  router.use('*', (req, res, next) => {
+    // 404 handler
+    const error = new Error('Resource not found');
 
-  error.statusCode = 404;
-  next(error);
-});
+    error.statusCode = 404;
+    next(error);
+  });
 
-router.use((err, req, res, next) => {
-  if (process.env.NODE_ENV !== "production") {
-    console.error(req.method, req.url, err.statusCode, err.message);
-  }
-  const error = new HttpError(err);
+  router.use((err, req, res, next) => {
+    if (process.env.NODE_ENV !== 'production') {
+      console.error(req.method, req.url, err.statusCode, err.message);
+    }
+    const error = new HttpError(err);
 
-  res.status(error.statusCode);
-  res.json(error);
-  next();
-});
+    res.status(error.statusCode);
+    res.json(error);
+    next();
+  });
+};
 
-module.exports = router;
+export default router;

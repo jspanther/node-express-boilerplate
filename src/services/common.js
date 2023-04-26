@@ -1,7 +1,6 @@
-"use strict";
-const mongoose = require("mongoose");
-const autoBind = require("auto-bind");
-const { HttpResponse } = require("../../helpers/HttpResponse");
+import autoBind from 'auto-bind';
+import mongoose from 'mongoose';
+import HttpResponse from '../../helpers/HttpResponse.js';
 
 class Service {
   /**
@@ -28,7 +27,7 @@ class Service {
       try {
         query._id = new mongoose.mongo.ObjectId(query._id);
       } catch (error) {
-        throw new Error("Not able to generate mongoose id with content");
+        throw new Error('Not able to generate mongoose id with content');
       }
     }
 
@@ -51,7 +50,7 @@ class Service {
       const item = await this.model.findById(id);
 
       if (!item) {
-        const error = new Error("Item not found");
+        const error = new Error('Item not found');
 
         error.statusCode = 404;
         throw error;
@@ -70,7 +69,7 @@ class Service {
       if (item) {
         return new HttpResponse(item);
       }
-      throw new Error("Something wrong happened");
+      throw new Error('Something wrong happened');
     } catch (error) {
       throw error;
     }
@@ -91,7 +90,7 @@ class Service {
       const item = await this.model.findByIdAndDelete(id);
 
       if (!item) {
-        const error = new Error("Item not found");
+        const error = new Error('Item not found');
 
         error.statusCode = 404;
         throw error;
@@ -104,4 +103,4 @@ class Service {
   }
 }
 
-module.exports = { Service };
+export default Service;
