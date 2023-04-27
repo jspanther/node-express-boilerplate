@@ -15,6 +15,12 @@ class AuthController {
     autoBind(this);
   }
 
+  /**
+   * Login API Route.
+   * @param email     Required
+   * @param password  Required
+   * @returns token
+   */
   async login(req, res, next) {
     try {
       const response = await this.service.login(
@@ -28,6 +34,17 @@ class AuthController {
     }
   }
 
+  /**
+   * Register API Route.
+   * @param name      Required
+   * @param email     Required
+   * @param password  Required
+   * @param deviceId  Required
+   * @param role      Optional
+   * @param status    Optional
+   * @param isDeleted Optional
+   * @returns registeredUserData  - Registered user data
+   */
   async register(req, res, next) {
     try {
       const registeredUserData = await this.service.register(req.body);
@@ -38,6 +55,13 @@ class AuthController {
     }
   }
 
+  /**
+   * Login API Route.
+   * @param _id      Required
+   * @param password  Required
+   * @param deviceId  Required
+   * @returns passwordChanged {true/false}
+   */
   async changePassword(req, res, next) {
     try {
       const id = req.user._id;
@@ -61,6 +85,12 @@ class AuthController {
     }
   }
 
+  /**
+   * Login API Route.
+   * @param _id      Required
+   * @param token  Required
+   * @returns logout {true/false}
+   */
   async logout(req, res, next) {
     try {
       const response = await this.service.logout(req.token);
@@ -71,6 +101,10 @@ class AuthController {
     }
   }
 
+  /**
+   * Login API Route.
+   * @param req      Required
+   */
   async checkLogin(req, res, next) {
     try {
       const token = this.extractToken(req);
