@@ -10,16 +10,20 @@ class User {
         name: {
           type: String,
           required: true,
+          trim: true,
         },
         email: {
           type: String,
           unique: true,
           required: true,
+          trim: true,
         },
         password: {
           type: String,
           required: true,
           select: false,
+          trim: true,
+          minLength: [8, 'Password should be minimum 8 characters long'],
         },
         role: {
           type: String,
@@ -31,12 +35,33 @@ class User {
           required: true,
           default: true,
         },
+        deviceId: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+        isDeleted: {
+          type: Boolean,
+          default: false,
+        },
+        accountCreated: {
+          type: Date,
+          default: Date.now,
+        },
+        accountUpdated: {
+          type: Date,
+          default: Date.now,
+        },
+        accountDeleted: {
+          type: Date,
+          default: Date.now,
+        },
       },
       { timestamps: true }
     );
 
     // Pre save Hook
-    schema.pre('save', function (next) {
+    schema.pre('save', (next) => {
       const user = this;
       // only hash the password if it has been modified (or is new)
 
@@ -60,7 +85,7 @@ class User {
     });
 
     // Compare Password
-    schema.methods.comparePassword = async function (candidatePassword) {
+    schema.methods.comparePassword = async (candidatePassword) => {
       return new Promise((resolve, reject) => {
         bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
           if (err) {
@@ -71,13 +96,15 @@ class User {
         });
       });
     };
-    schema.statics.findByEmail = function (email) {
+    schema.statics.findByEmail = (email) => {
       return this.findOne({ email: email });
     };
     schema.plugin(uniqueValidator);
     try {
       mongoose.model('user', schema);
-    } catch (e) {}
+    } catch (e) {
+      console.error('✘ Error occured in the model creation :- ', e);
+    }
   }
 
   getInstance() {

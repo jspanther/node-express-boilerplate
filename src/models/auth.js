@@ -23,7 +23,7 @@ class Auth {
       { timestamps: true }
     );
 
-    schema.statics.generateToken = async function (user) {
+    schema.statics.generateToken = async (user) => {
       // Create a new token with the user details
       try {
         const token = await jwt.sign(
@@ -46,7 +46,7 @@ class Auth {
       }
     };
 
-    schema.statics.decodeToken = async function (token) {
+    schema.statics.decodeToken = async (token) => {
       // Create a new token with the user details
       try {
         return await jwt.verify(token, jwtKey);
