@@ -47,8 +47,15 @@ class AuthController {
    */
   async register(req, res, next) {
     try {
-      const registeredUserData = await this.service.register(req.body);
-
+      const { email, password } = req.body;
+      const deviceId = req.headers.deviceid;
+      console.log(deviceId);
+      const registeredUserData = await this.service.register({
+        email,
+        password,
+        deviceId,
+      });
+      console.log(registeredUserData);
       await res.status(200).json(registeredUserData);
     } catch (e) {
       next(e);

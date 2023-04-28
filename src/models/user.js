@@ -1,3 +1,4 @@
+import autoBind from 'auto-bind';
 import bcrypt from 'bcrypt';
 import mongoose, { Schema } from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
@@ -9,7 +10,6 @@ class User {
       {
         name: {
           type: String,
-          required: true,
           trim: true,
         },
         email: {
@@ -33,7 +33,7 @@ class User {
         status: {
           type: Boolean,
           required: true,
-          default: true,
+          default: false,
         },
         deviceId: {
           type: String,
@@ -61,7 +61,7 @@ class User {
     );
 
     // Pre save Hook
-    schema.pre('save', (next) => {
+    schema.pre('save', function (next) {
       const user = this;
       // only hash the password if it has been modified (or is new)
 
@@ -85,7 +85,7 @@ class User {
     });
 
     // Compare Password
-    schema.methods.comparePassword = async (candidatePassword) => {
+    schema.methods.comparePassword = async function (candidatePassword) {
       return new Promise((resolve, reject) => {
         bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
           if (err) {
@@ -97,7 +97,7 @@ class User {
       });
     };
     schema.statics.findByEmail = (email) => {
-      return this.findOne({ email: email });
+      return mongoose.model('user').findOne({ email: email });
     };
     schema.plugin(uniqueValidator);
     try {

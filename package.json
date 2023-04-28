@@ -14,9 +14,9 @@
     "start:n": "nodemon ./bin/www.js"
   },
   "dependencies": {
-    "bcrypt": "^5.1.0",
     "async": "^3.2.4",
     "auto-bind": "^5.0.1",
+    "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "cookie-parser": "~1.4.6",
     "cors": "^2.8.5",
@@ -24,14 +24,15 @@
     "express": "^4.18.2",
     "helmet": "^6.1.5",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.0.4",
+    "mongoose": "^7.0.5",
     "mongoose-unique-validator": "^4.0.0",
     "morgan": "~1.10.0",
     "pluralize": "^8.0.0"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "eslint": "^8.38.0",
+    "@babel/core": "^7.21.4",
+    "@babel/eslint-parser": "^7.21.3",
+    "eslint": "^8.39.0",
     "nodemon": "^2.0.22"
   }
 }

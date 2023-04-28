@@ -25,7 +25,7 @@ PATHS.forEach(async (module, index) => {
     const name = module.split('.')[0];
     apiFunctionName = await import(`./api_routes/${module}`);
 
-    router.use(`/${pluralize.plural(name)}`, apiFunctionName.default);
+    router.use(`/api/${pluralize.plural(name)}`, apiFunctionName.default);
     moduleMapper.push({
       Module: name,
       Route: `/api/${pluralize.plural(name)}`,
@@ -40,7 +40,7 @@ const routerFunction = () => {
   /* List out all the api's */
   console.table(moduleMapper);
 
-  router.use('*', (req, res, next) => {
+  router.use('/*', (req, res, next) => {
     // 404 handler
     const error = new Error('Resource not found');
 
