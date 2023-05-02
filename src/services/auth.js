@@ -108,12 +108,12 @@ class AuthService {
       if (userFromDb.data && userFromDb.data.status) {
         return userFromDb.data;
       }
-      const error = new Error('Invalid Token');
+      const error = new Error('User not validated');
 
       error.statusCode = 401;
       throw error;
     } catch (e) {
-      const error = new Error('Invalid Token');
+      const error = new Error(e);
 
       error.statusCode = 401;
       throw error;

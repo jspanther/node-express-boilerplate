@@ -44,14 +44,6 @@ class User {
           type: Boolean,
           default: false,
         },
-        accountCreated: {
-          type: Date,
-          default: Date.now,
-        },
-        accountUpdated: {
-          type: Date,
-          default: Date.now,
-        },
         accountDeleted: {
           type: Date,
           default: Date.now,
@@ -97,7 +89,7 @@ class User {
       });
     };
     schema.statics.findByEmail = (email) => {
-      return mongoose.model('user').findOne({ email: email });
+      return mongoose.model('user').findOne({ email: email, isDeleted: false });
     };
     schema.plugin(uniqueValidator);
     try {
