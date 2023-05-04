@@ -42,7 +42,7 @@ const routerFunction = () => {
 
   router.use('/*', (req, res, next) => {
     // 404 handler
-    const error = new Error('Resource not found');
+    const error = new Error('Ressource ikke fundet');
 
     error.statusCode = 404;
     next(error);

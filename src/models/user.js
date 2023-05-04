@@ -23,7 +23,7 @@ class User {
           required: true,
           select: false,
           trim: true,
-          minLength: [8, 'Password should be minimum 8 characters long'],
+          minLength: [8, 'Adgangskoden skal være mindst 8 tegn lang'],
         },
         role: {
           type: String,

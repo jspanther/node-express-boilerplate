@@ -22,7 +22,7 @@ class AuthService {
 
     if (!user) {
       // User not found
-      const error = new Error('Invalid Email');
+      const error = new Error('Ugyldig email');
 
       error.statusCode = 422;
       throw error;
@@ -33,7 +33,7 @@ class AuthService {
         const passwordMatched = await user.comparePassword(password);
 
         if (!passwordMatched) {
-          const error = new Error('Invalid Password');
+          const error = new Error('forkert kodeord');
 
           error.statusCode = 422;
           throw error;
@@ -88,7 +88,7 @@ class AuthService {
       const tokenInDB = await this.model.countDocuments({ token });
 
       if (!tokenInDB) {
-        const error = new Error('Invalid Token');
+        const error = new Error('Ugyldig Token');
 
         error.statusCode = 401;
         throw error;
@@ -97,7 +97,7 @@ class AuthService {
       const user = await this.model.decodeToken(token);
 
       if (!user) {
-        const error = new Error('Invalid Token');
+        const error = new Error('Ugyldig Token');
 
         error.statusCode = 401;
         throw error;
@@ -108,7 +108,7 @@ class AuthService {
       if (userFromDb.data && userFromDb.data.status) {
         return userFromDb.data;
       }
-      const error = new Error('User not validated');
+      const error = new Error('Bruger ikke valideret');
 
       error.statusCode = 401;
       throw error;
