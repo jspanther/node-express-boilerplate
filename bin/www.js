@@ -3,7 +3,8 @@
  * Module dependencies.
  */
 import fs from 'fs';
-import https from 'https';
+// import https from 'https';
+import http from 'http';
 import path from 'path';
 import url from 'url';
 import app from '../app.js';
@@ -25,21 +26,22 @@ const normalizePort = (val) => {
   return false;
 };
 
-/**
- * Get ssl certificates to run HTTPS.
- */
-const certificatePath = path.resolve(
-  `${path.dirname(url.fileURLToPath(import.meta.url))}/certificates`
-);
-const options = {
-  key: fs.readFileSync(`${certificatePath}/key.pem`),
-  cert: fs.readFileSync(`${certificatePath}/cert.pem`),
-};
+// /**
+//  * Get ssl certificates to run HTTPS.
+//  */
+// const certificatePath = path.resolve(
+//   `${path.dirname(url.fileURLToPath(import.meta.url))}/certificates`
+// );
+// const options = {
+//   key: fs.readFileSync(`${certificatePath}/key.pem`),
+//   cert: fs.readFileSync(`${certificatePath}/cert.pem`),
+// };
 
 /**
  * Create HTTPS server.
  */
-const server = https.createServer(options, app);
+// const server = https.createServer(options, app);
+const server = http.createServer(app);
 
 /**
  * Get port from environment and store in Express.
