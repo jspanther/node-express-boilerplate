@@ -65,13 +65,20 @@ class Service {
   async insert(data) {
     try {
       const item = await this.model.create(data);
-
       if (item) {
         return new HttpResponse(item);
       }
       throw new Error('Something wrong happened');
     } catch (error) {
-      throw error;
+      const obj = {};
+      if (error && error.message.split(':')[0] === 'user validation failed') {
+        const messageArray = error.message.split(':');
+        obj.error =
+          messageArray[1].trim() === 'email'
+            ? 'Fejl, forventet at "e-mail" var unik'
+            : messageArray[2];
+      }
+      throw new Error(obj.error);
     }
   }
 
