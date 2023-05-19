@@ -29,6 +29,26 @@ class UserService extends Service {
       ? this.model.findByEmail(email).select('+password')
       : this.model.findByEmail(email);
   }
+
+  async updateProfile(id, data) {
+    try {
+      const userData = await this.model.findByIdAndUpdate(id, data, {
+        new: true,
+      });
+      return { userData };
+    } catch (errors) {
+      throw errors;
+    }
+  }
+
+  async getProfile(id) {
+    try {
+      const userData = await this.model.findById(id);
+      return { userData };
+    } catch (errors) {
+      throw errors;
+    }
+  }
 }
 
 export default UserService;

@@ -125,6 +125,65 @@ class AuthController {
     }
   }
 
+  /**
+   * Update Profile data
+   * @param name
+   * @param email
+   * @param gender
+   * @param birthYear
+   * @param height
+   * @param weight
+   * @param inTreatment
+   * @return User data object
+   */
+  async updateProfile(req, res, next) {
+    try {
+      const {
+        _id,
+        name,
+        email,
+        gender,
+        birthYear,
+        height,
+        weight,
+        inTreatment,
+      } = req.body;
+      const deviceId = req.headers.deviceid;
+      const userData = {
+        _id,
+        name,
+        email,
+        gender,
+        birthYear,
+        height,
+        weight,
+        inTreatment,
+        deviceId,
+        status: true, // Change the status back to false once risks are started.
+      };
+      const registeredUserData = await this.service.updateProfile(
+        _id,
+        userData
+      );
+      await res.status(200).json(registeredUserData);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  /**
+   *
+   * @param {_id, deviceId} req
+   * @returns {userData}
+   */
+  async getProfile(req, res, next) {
+    try {
+      const { _id } = req.body;
+      const userData = await this.service.getProfile(_id);
+      res.status(200).json(userData);
+    } catch (error) {}
+  }
+
   extractToken(req) {
     if (
       req.headers.authorization &&

@@ -18,6 +18,23 @@ class User {
           required: true,
           trim: true,
         },
+        gender: {
+          type: String,
+          trim: true,
+        },
+        birthYear: {
+          type: Number,
+        },
+        height: {
+          type: Number,
+        },
+        weight: {
+          type: Number,
+        },
+        inTreatment: {
+          type: Boolean,
+          default: false,
+        },
         password: {
           type: String,
           required: true,

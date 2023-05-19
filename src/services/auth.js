@@ -119,6 +119,26 @@ class AuthService {
       throw error;
     }
   }
+
+  async updateProfile(id, data) {
+    try {
+      const updatedProfile = await this.userService.updateProfile(id, data);
+
+      return new HttpResponse(updatedProfile);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getProfile(id) {
+    try {
+      const userData = await this.userService.getProfile(id);
+
+      return new HttpResponse(userData);
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default AuthService;
