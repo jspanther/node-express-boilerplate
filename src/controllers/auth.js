@@ -53,7 +53,7 @@ class AuthController {
         email,
         password,
         deviceId,
-        status: false,
+        status: true,
       };
       const registeredUserData = await this.service.register(registerUserData);
       await res.status(200).json(registeredUserData);
