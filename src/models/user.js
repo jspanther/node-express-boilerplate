@@ -15,6 +15,8 @@ class User {
         email: {
           type: String,
           unique: true,
+          trim: true,
+          lowercase: true,
           required: true,
           trim: true,
         },
